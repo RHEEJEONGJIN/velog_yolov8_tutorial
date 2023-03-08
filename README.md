@@ -1,1 +1,1 @@
-"# velog_yolov8_tutorial" 
+# velog yolov8 tutorial 정리
