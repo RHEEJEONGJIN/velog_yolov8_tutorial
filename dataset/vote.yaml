@@ -1,0 +1,15 @@
+path: ./vote  # dataset root dir
+train: train/images  # train images 
+val: val/images  # val images 
+# test: val.txt # test images (optional)
+
+# Classes
+names:
+  0: 1
+  1: 2
+  2: 3
+  3: 4
+  4: stamp
+  5: sign
+  6: fake
+  7: finger

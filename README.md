@@ -1,1 +1,9 @@
-# velog yolov8 tutorial 정리
+# VOTE
+## run code
+```bash
+python src/run.py
+```
+## train code
+```bash
+yolo detect train cfg=cfg/custom.yaml
+```
