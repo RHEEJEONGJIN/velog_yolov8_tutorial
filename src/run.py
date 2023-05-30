@@ -6,7 +6,7 @@ def print_fps(start_time):
     fps_str = "FPS : %0.2f" %fps
     print(fps_str)
 
-def detect_pytorch(
+def predict(
         imgs=None,
         model=None,
         conf=0.5,
@@ -105,21 +105,25 @@ if __name__ == "__main__":
     total = defaultdict(int)
 
     ##### streaming #####
-
+    start_cnt = time.time()
     cap = cv2.VideoCapture(0)
     while(True):
+        cnt = int(time.time()-start_cnt)
         ret, frame = cap.read() 
-        position = (10,50)
+        cnt_position = (10,50)
+        text_position = (50,50)
         text = json.dumps(dict(total))
-        cv2.putText(frame, text, position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 3)
+        cv2.putText(frame, str(cnt+1), cnt_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
+        cv2.putText(frame, text, text_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 3)
         cv2.imshow('Push Enter key, Exit q key', frame)
         if cv2.waitKey(33) & 0xFF == ord('q'):
             break
-        elif cv2.waitKey(33) & 0xFF == 13: # enter key
-            outputs = detect_pytorch(imgs=frame, model=model, conf=0.5)
+        if cnt == 4:
+            outputs = predict(imgs=frame, model=model, conf=0.5)
             if outputs:
                 total[outputs] += 1
                 print(total)
+                start_cnt = time.time()
             continue
     cap.release()
     cv2.destroyAllWindows()
